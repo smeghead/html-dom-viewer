@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+<!-- 
+    <EditText android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="top|left" android:scrollbarAlwaysDrawHorizontalTrack="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:clickable="false" android:id="@+id/html_source" android:scrollbars="vertical" android:scrollbarSize="50px">
+        <requestFocus></requestFocus>
+    </EditText>
+ -->
+    <pl.polidea.treeview.TreeViewList android:id="@+id/html_source" android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scrollbars="vertical" android:smoothScrollbar="true"/>
+</LinearLayout>
