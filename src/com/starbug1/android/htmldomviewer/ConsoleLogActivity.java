@@ -10,7 +10,6 @@ public class ConsoleLogActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.console_log);
 		if (savedInstanceState == null) {

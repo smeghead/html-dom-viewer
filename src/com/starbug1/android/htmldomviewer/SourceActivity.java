@@ -4,22 +4,20 @@ import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
 
-
 import pl.polidea.treeview.InMemoryTreeStateManager;
 import pl.polidea.treeview.TreeBuilder;
 import pl.polidea.treeview.TreeStateManager;
 import pl.polidea.treeview.TreeViewList;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 
 public class SourceActivity extends Activity {
     private final Set<Element> selected = new HashSet<Element>();

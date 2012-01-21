@@ -9,7 +9,5 @@
         <requestFocus></requestFocus>
     </EditText>
  -->
-    <pl.polidea.treeview.TreeViewList android:id="@+id/html_source" android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scrollbars="vertical" android:smoothScrollbar="true"/>
+    <pl.polidea.treeview.TreeViewList android:id="@+id/html_source" android:scrollbars="vertical" android:smoothScrollbar="true" android:layout_height="fill_parent" android:layout_width="fill_parent"/>
 </LinearLayout>

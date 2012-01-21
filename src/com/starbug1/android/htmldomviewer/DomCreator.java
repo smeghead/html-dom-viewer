@@ -1,7 +1,5 @@
 package com.starbug1.android.htmldomviewer;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 
 import org.ccil.cowan.tagsoup.Parser;
@@ -12,7 +10,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 import pl.polidea.treeview.TreeBuilder;
-
 import android.util.Log;
 
 public class DomCreator implements ContentHandler {

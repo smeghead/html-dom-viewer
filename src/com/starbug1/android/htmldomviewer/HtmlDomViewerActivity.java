@@ -14,9 +14,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,13 +27,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 public class HtmlDomViewerActivity extends Activity {
 	
@@ -45,6 +40,7 @@ public class HtmlDomViewerActivity extends Activity {
 	WebView browser_ = null;
 	ImageButton jump_ = null;
 	List<ConsoleMessage> jsConsoleMessages_ = new ArrayList<ConsoleMessage>();
+	boolean loading_ = true;
 
     /** Called when the activity is first created. */
     @Override
@@ -88,48 +84,71 @@ public class HtmlDomViewerActivity extends Activity {
 			@Override
 			public void onPageStarted(WebView view, String url,
 					Bitmap favicon) {
-				Log.d("NewsDetailActivity", "onPageStarted url: " + url);
+				Log.d("HtmlDomViewerActivity", "onPageStarted url: " + url);
 			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
 					String url) {
-				Log.d("NewsDetailActivity",
+				Log.d("HtmlDomViewerActivity",
 						"shouldOverrideUrlLoading url: " + url);
 				addUrl(url);
 				textUrl_.setText(url);
 				return super.shouldOverrideUrlLoading(view, url);
 			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				Log.d("HtmlDomViewerActivity", "onPageFinished url: " + url);
+				if (url.equals(textUrl_.getText())) {
+					loading_ = false;
+				}
+				super.onPageFinished(view, url);
+			}
 		});
 		WebSettings ws = browser.getSettings();
 		ws.setBuiltInZoomControls(true);
-		ws.setLoadWithOverviewMode(true);
-		ws.setPluginsEnabled(true);
 		ws.setUseWideViewPort(true);
 		ws.setJavaScriptEnabled(true);
-		ws.setAppCacheMaxSize(1024 * 1024 * 64); //64MB
-		ws.setCacheMode(WebSettings.LOAD_DEFAULT);
-		ws.setDomStorageEnabled(true);
-		ws.setAppCacheEnabled(true);
-		ws.setGeolocationEnabled(false);
-		browser.setVerticalScrollbarOverlay(true);
 		browser_.addJavascriptInterface(new JsObj(), "___android___");
 
 		jump_.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		        inputMethodManager.hideSoftInputFromWindow(textUrl_.getWindowToken(), 0);
 		        browser_.requestFocus();
 		        
 				String url = textUrl_.getText().toString();
 				browser.loadUrl(url);
 				addUrl(url);
+				loading_ = true;
 			}
 		});
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, getUrls());
 		textUrl_.setAdapter(adapter);
+		
+		// start from intent, open url.
+		Intent intent = this.getIntent();
+		String url = intent.getDataString();
+		if (url == null && intent.getExtras() != null) {
+			Bundle extras = intent.getExtras();
+            String text = extras.getString(android.content.Intent.EXTRA_TEXT);
+            if (text.startsWith("http")) {
+                url = text;
+            }
+		}
+		Log.d("HtmlDomViewerActivity", "intent url: " + url);
+		if (url != null && url.startsWith("http")) {
+			InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+	        inputMethodManager.hideSoftInputFromWindow(textUrl_.getWindowToken(), 0);
+	        browser_.requestFocus();
+
+	        textUrl_.setText(url);
+			browser.loadUrl(url);
+			addUrl(url);
+		}
     }
 
     private void addUrl(String url) {
@@ -162,10 +181,18 @@ public class HtmlDomViewerActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_view_source:
-			viewSource();
+			if (!loading_) {
+				Toast.makeText(this, "now loading... please waite for finish loading.", Toast.LENGTH_LONG).show();
+			} else {
+				viewSource();
+			}
 			break;
 		case R.id.menu_view_source_by_external_editor:
-			viewSourceByExternalEditor();
+			if (!loading_) {
+				Toast.makeText(this, "now loading... please waite for finish loading.", Toast.LENGTH_LONG).show();
+			} else {
+				viewSourceByExternalEditor();
+			}
 			break;
 		case R.id.menu_console:
 			console();
@@ -200,6 +227,7 @@ public class HtmlDomViewerActivity extends Activity {
 			Intent intent = new Intent(HtmlDomViewerActivity.this, SourceActivity.class);
 			intent.setType("text/plain");
 			intent.putExtra("html", html);
+			Log.d("HtmlDomViewerActivity", html);
 			HtmlDomViewerActivity.this.startActivity(intent);
 		}
 		public void viewSourceByExternalEditor(String html) {
