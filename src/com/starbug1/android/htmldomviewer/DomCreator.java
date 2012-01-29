@@ -40,14 +40,6 @@ public class DomCreator implements ContentHandler {
         return 0;
 	}
 	
-	private String getIndent() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < level_; i++) {
-			sb.append(" ");
-		}
-		return sb.toString();
-	}
-
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
@@ -56,7 +48,6 @@ public class DomCreator implements ContentHandler {
 		StringBuffer attrs = new StringBuffer();
 		for(int i = 0; i < atts.getLength(); i++)
 	        attrs.append(" " + atts.getQName(i) + "=\"" + atts.getValue(i) + "\"");
-		Log.d("DomCreator", getIndent() + "<" + qName + attrs.toString() + ">");
         builder_.sequentiallyAddNextNode(new Element(currentId_++, "<" + qName + attrs.toString() + ">"), level_);
 		level_++;
 		maxLevel_ = Math.max(maxLevel_, level_);
@@ -80,7 +71,6 @@ public class DomCreator implements ContentHandler {
 		registerTestNodes();
 		
 		level_--;
-		Log.d("DomCreator", getIndent() + "</" + qName + ">");
         builder_.sequentiallyAddNextNode(new Element(currentId_++, "</" + qName + ">"), level_);
 	}
 
@@ -90,7 +80,6 @@ public class DomCreator implements ContentHandler {
 		String s = new String(ch, start, length).trim();
 		if (s.length() == 0) return;
 		
-		Log.d("DomCreator", getIndent() + " " + s);
 		sb_.append(s);
 		
 	}

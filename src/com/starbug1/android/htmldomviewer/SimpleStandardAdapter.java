@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**

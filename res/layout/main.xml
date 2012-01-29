@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     >
 <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="fill_parent">
-    <AutoCompleteTextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="2" android:id="@+id/text_url" android:lines="1"></AutoCompleteTextView>
+    <AutoCompleteTextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="2" android:id="@+id/text_url" android:lines="1" android:maxLines="1" android:minLines="1" android:imeOptions="actionSend|flagNoEnterAction"></AutoCompleteTextView>
     <ImageButton android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:src="@android:drawable/ic_media_play" android:id="@+id/button_jump"></ImageButton>
 </LinearLayout>
 <android.webkit.WebView android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/webView"></android.webkit.WebView>

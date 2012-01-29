@@ -119,6 +119,7 @@ public class HtmlDomViewerActivity extends Activity {
 		        inputMethodManager.hideSoftInputFromWindow(textUrl_.getWindowToken(), 0);
 		        browser_.requestFocus();
 		        
+				textUrl_.setText(completeUrl(textUrl_.getText().toString()));
 				String url = textUrl_.getText().toString();
 				browser.loadUrl(url);
 				addUrl(url);
@@ -149,6 +150,15 @@ public class HtmlDomViewerActivity extends Activity {
 			browser.loadUrl(url);
 			addUrl(url);
 		}
+    }
+    public String completeUrl(String url) {
+    	if (url == null) {
+    		return "";
+    	}
+    	if (!url.matches("^[\\w]+://.*$")) {
+    		return "http://" + url;
+    	}
+    	return url;
     }
 
     private void addUrl(String url) {
