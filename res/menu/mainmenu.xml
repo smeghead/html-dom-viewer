@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:icon="@android:drawable/ic_menu_view" android:id="@+id/menu_view_source" android:title="view dom tree"></item>
-    <item android:icon="@android:drawable/ic_menu_share" android:id="@+id/menu_view_source_by_external_editor" android:title="open by external"></item>
+    <item android:icon="@android:drawable/ic_menu_view" android:id="@+id/menu_view_source" android:title="View dom tree"></item>
+    <item android:icon="@android:drawable/ic_menu_share" android:id="@+id/menu_view_source_by_external_editor" android:title="Open by external"></item>
     <item android:title="Console log" android:id="@+id/menu_console" android:icon="@android:drawable/ic_menu_info_details"></item>
     
 </menu>

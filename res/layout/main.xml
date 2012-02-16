@@ -1,12 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-<LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="fill_parent">
-    <AutoCompleteTextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="2" android:id="@+id/text_url" android:lines="1" android:maxLines="1" android:minLines="1" android:imeOptions="actionSend|flagNoEnterAction"></AutoCompleteTextView>
-    <ImageButton android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:src="@android:drawable/ic_media_play" android:id="@+id/button_jump"></ImageButton>
-</LinearLayout>
-<android.webkit.WebView android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/webView"></android.webkit.WebView>
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <AutoCompleteTextView
+            android:id="@+id/text_url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:imeOptions="actionSend|flagNoEnterAction"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1" >
+        </AutoCompleteTextView>
+
+        <ImageButton
+            android:id="@+id/button_jump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_media_play" >
+        </ImageButton>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <android.webkit.WebView
+            android:id="@+id/webView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </android.webkit.WebView>
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="View dom tree"
+            android:layout_gravity="left|bottom"
+            android:padding="10dp"
+            android:visibility="invisible"
+            android:src="@android:drawable/ic_menu_view" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/image_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Console Log"
+            android:layout_gravity="right|bottom"
+            android:padding="10dp"
+            android:visibility="invisible"
+            android:src="@android:drawable/ic_menu_info_details">
+        </ImageView>
+    </FrameLayout>
+
 </LinearLayout>

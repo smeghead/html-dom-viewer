@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class HtmlDomViewerActivity extends Activity {
@@ -73,6 +74,8 @@ public class HtmlDomViewerActivity extends Activity {
 					@Override
 					public void run() {
 						Toast.makeText(HtmlDomViewerActivity.this, consoleMessage.toString(), Toast.LENGTH_LONG).show();
+						ImageView logButton = (ImageView) HtmlDomViewerActivity.this.findViewById(R.id.image_log);
+						logButton.setVisibility(View.VISIBLE);
 					}
 				});
 				super.onConsoleMessage(message, lineNumber, sourceID);
@@ -124,6 +127,8 @@ public class HtmlDomViewerActivity extends Activity {
 				browser.loadUrl(url);
 				addUrl(url);
 				loading_ = true;
+				ImageView viewButton = (ImageView) HtmlDomViewerActivity.this.findViewById(R.id.image_view);
+				viewButton.setVisibility(View.VISIBLE);
 			}
 		});
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -150,7 +155,22 @@ public class HtmlDomViewerActivity extends Activity {
 			browser.loadUrl(url);
 			addUrl(url);
 		}
+		ImageView viewButton = (ImageView)this.findViewById(R.id.image_view);
+		viewButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				viewSource();
+			}
+		});
+		ImageView logButton = (ImageView)this.findViewById(R.id.image_log);
+		logButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				console();
+			}
+		});
     }
+    
     public String completeUrl(String url) {
     	if (url == null) {
     		return "";
