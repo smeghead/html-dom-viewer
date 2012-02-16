@@ -149,6 +149,7 @@ public class SourceActivity extends Activity {
 	}
 	private List<Element> searchRec(String keyword, Element parent, List<Element> acc) {
 		TreeNodeInfo<Element> info = manager_.getNodeInfo(parent);
+		parent.setHitLine(false); //初期化
 		if (parent.getContent().contains(keyword)) {
 			Log.d("SourceActivity", "hit!");
 			parent.setHitLine(true);
