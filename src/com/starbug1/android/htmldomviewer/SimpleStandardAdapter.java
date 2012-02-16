@@ -6,6 +6,7 @@ import pl.polidea.treeview.AbstractTreeViewAdapter;
 import pl.polidea.treeview.TreeNodeInfo;
 import pl.polidea.treeview.TreeStateManager;
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -39,6 +40,7 @@ class SimpleStandardAdapter extends AbstractTreeViewAdapter<Element> {
         final TextView descriptionView = (TextView) viewLayout
                 .findViewById(R.id.demo_list_item_description);
         descriptionView.setText(treeNodeInfo.getId().getContent());
+        viewLayout.setBackgroundColor(treeNodeInfo.getId().isHitLine() ? Color.rgb(102, 102, 51) : Color.BLACK);
         return viewLayout;
     }
 

@@ -7,6 +7,7 @@ public class Element implements Serializable {
 
 	private long id_ = 0;
 	private String content_ = "";
+	private boolean hitLine_ = false;
 	
 	public Element(long id, String content) {
 		id_ = id;
@@ -23,6 +24,12 @@ public class Element implements Serializable {
 	}
 	public void setContent(String content) {
 		this.content_ = content;
+	}
+	public boolean isHitLine() {
+		return hitLine_;
+	}
+	public void setHitLine(boolean hitLine) {
+		this.hitLine_ = hitLine;
 	}
 	
 }

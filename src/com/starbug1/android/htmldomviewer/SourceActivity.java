@@ -1,19 +1,29 @@
 package com.starbug1.android.htmldomviewer;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import pl.polidea.treeview.InMemoryTreeStateManager;
 import pl.polidea.treeview.TreeBuilder;
+import pl.polidea.treeview.TreeNodeInfo;
 import pl.polidea.treeview.TreeStateManager;
 import pl.polidea.treeview.TreeViewList;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class SourceActivity extends Activity {
     private final Set<Element> selected = new HashSet<Element>();
@@ -80,4 +90,75 @@ public class SourceActivity extends Activity {
         source_.setCollapsible(this.collapsible_);
     }
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.source, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_search:
+			Toast.makeText(this, "search.", Toast.LENGTH_LONG).show();
+			searchDialog();
+			break;
+		}
+		return true;
+	}
+
+	private void searchDialog() {
+		final EditText editView = new EditText(SourceActivity.this);
+		new AlertDialog.Builder(SourceActivity.this)
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setTitle("Search for...")
+				// setViewにてビューを設定します。
+				.setView(editView)
+				.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// 入力した文字をトースト出力する
+						search(editView.getText().toString());
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+							}
+						}).show();
+	}
+	private void search(String keyword) {
+		List<Element> acc = new ArrayList<Element>();
+		for (Element e : manager_.getVisibleList()) {
+			acc = searchRec(keyword, e, acc);
+		}
+		for (Element e : acc) {
+			Log.d("SourceActivity", "!!!!!!!!!!!!!" + e.getContent());
+			expandParents(e);
+		}
+	}
+	private void expandParents(Element element) {
+		Element parent = manager_.getParent(element);
+		if (parent != null) {
+			manager_.expandDirectChildren(parent);
+			expandParents(parent);
+		}
+	}
+	private List<Element> searchRec(String keyword, Element parent, List<Element> acc) {
+		TreeNodeInfo<Element> info = manager_.getNodeInfo(parent);
+		if (parent.getContent().contains(keyword)) {
+			Log.d("SourceActivity", "hit!");
+			parent.setHitLine(true);
+			acc.add(parent);
+		}
+		if (info.isWithChildren()) {
+			for (Element e : manager_.getChildren(parent)) {
+				searchRec(keyword, e, acc);
+			}
+		}
+		return acc;
+	}
 }
