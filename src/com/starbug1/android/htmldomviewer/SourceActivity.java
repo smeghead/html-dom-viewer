@@ -53,6 +53,11 @@ public class SourceActivity extends Activity {
 
         }
         setContentView(R.layout.source);
+        
+        if (html_ == null) {
+        	Log.e("SourceActivity", "html string is null.");
+        	return;
+        }
         source_ = (TreeViewList) SourceActivity.this.findViewById(R.id.html_source);
         registerForContextMenu(source_);
 

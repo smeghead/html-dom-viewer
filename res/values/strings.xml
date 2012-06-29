@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, HtmlDomViewerActivity!</string>
     <string name="app_name">HtmlDomViewer</string>
+    <string name="introduce_html">&lt;html&gt;&lt;html&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0&quot; /&gt;&lt;/html&gt;&lt;body&gt;&lt;strong&gt;Input url above and tap the right button.&lt;/strong&gt;&lt;p&gt;HTML DOM VIEWER&lt;/p&gt;&lt;ul&gt;&lt;li&gt;you can view dynamic html dom tree&lt;/li&gt;&lt;li&gt;you can check javascript console logs.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
 </resources>

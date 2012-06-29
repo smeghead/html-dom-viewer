@@ -1,7 +1,5 @@
 package pl.polidea.treeview;
 
-import com.starbug1.android.htmldomviewer.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -10,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -19,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+
+import com.starbug1.android.htmldomviewer.R;
 
 /**
  * Adapter used to feed the table view.

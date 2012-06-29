@@ -1,8 +1,5 @@
 package pl.polidea.treeview;
 
-import com.starbug1.android.htmldomviewer.R;
-
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -12,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.starbug1.android.htmldomviewer.R;
 
 /**
  * Tree view, expandable multi-level.

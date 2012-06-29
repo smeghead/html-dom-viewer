@@ -29,11 +29,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 public class HtmlDomViewerActivity extends Activity {
+	private static final String TAG = "HtmlDomViewerActivity";
 	
 	final Handler handler_ = new Handler();
 	private SharedPreferences pref_;
@@ -109,6 +111,7 @@ public class HtmlDomViewerActivity extends Activity {
 				super.onPageFinished(view, url);
 			}
 		});
+		
 		WebSettings ws = browser.getSettings();
 		ws.setBuiltInZoomControls(true);
 		ws.setUseWideViewPort(true);
@@ -131,7 +134,10 @@ public class HtmlDomViewerActivity extends Activity {
 				viewButton.setVisibility(View.VISIBLE);
 			}
 		});
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		
+		browser.loadData(getString(R.string.introduce_html), "text/html", "UTF-8");
+		
+		final UrlListAdapter adapter = new UrlListAdapter(this,
 				android.R.layout.simple_dropdown_item_1line, getUrls());
 		textUrl_.setAdapter(adapter);
 		

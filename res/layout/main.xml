@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -15,9 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:imeOptions="actionSend|flagNoEnterAction"
-            android:lines="1"
-            android:maxLines="1"
-            android:minLines="1" >
+            android:singleLine="true">
         </AutoCompleteTextView>
 
         <ImageButton
@@ -31,7 +31,8 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="0px"
+        android:layout_weight="1" >
 
         <android.webkit.WebView
             android:id="@+id/webView"
@@ -62,4 +63,12 @@
         </ImageView>
     </FrameLayout>
 
+    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/relativeLayout2" android:layout_gravity="bottom">
+        <com.google.ads.AdView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/adView"
+                ads:adUnitId="a14f1eb9261aaff"
+                ads:adSize="BANNER"
+                ads:loadAdOnCreate="true">
+        </com.google.ads.AdView>
+    </RelativeLayout>
+    
 </LinearLayout>
