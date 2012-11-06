@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.starbug1.android.htmldomviewer"
-      android:versionCode="44"
-      android:versionName="0.4.4">
-    <uses-sdk android:minSdkVersion="7" />
-
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
+      android:versionCode="46"
+      android:versionName="0.4.6">
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="7" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".HtmlDomViewerActivity"
                   android:label="@string/app_name"
                   android:configChanges="orientation|keyboardHidden">
@@ -37,7 +39,4 @@
                 android:name="com.google.ads.AdActivity" 
                 android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14f1eb9261aaff"/>
 </manifest>

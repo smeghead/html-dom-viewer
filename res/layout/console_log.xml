@@ -5,7 +5,35 @@
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    <TextView android:layout_height="0px" android:layout_weight="1" android:layout_width="fill_parent" android:id="@+id/txt_message"></TextView>
+  
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" >
+
+        <ScrollView 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
+	        <TextView 
+	            android:layout_width="fill_parent" 
+	            android:layout_height="wrap_content" 
+	            android:id="@+id/txt_message"
+	            ></TextView>
+            
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/clear_console"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Clear Console"
+            android:layout_gravity="right|bottom"
+            android:padding="10dp"
+            android:src="@android:drawable/ic_menu_delete" >
+        </ImageView>
+
+    </FrameLayout>
     
     <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/relativeLayout2" android:layout_gravity="bottom">
         <com.google.ads.AdView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/adView"

@@ -18,9 +18,8 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 	private List<String> urlsOriginal_ = new ArrayList<String>();
 	private List<String> urls_ = new ArrayList<String>();
 	private Context context_ = null;
-	private int resourceId_;
+	private final int resourceId_;
 	private final LayoutInflater inflater_;
-
 
 	public UrlListAdapter(Context context, int resourceId, List<String> urls) {
 		context_ = context;
@@ -28,8 +27,9 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 		inflater_ = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		urls_ = urlsOriginal_ = urls;
+		Log.d(TAG, context_.toString());
 	}
-	
+
 	@Override
 	public int getCount() {
 		return urls_.size();
@@ -61,8 +61,9 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 	Filter filter = new Filter() {
 		@Override
 		public String convertResultToString(Object resultValue) {
-			if (resultValue == null) return "";
-			
+			if (resultValue == null)
+				return "";
+
 			return resultValue.toString();
 		}
 
