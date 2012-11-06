@@ -26,58 +26,60 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SourceActivity extends Activity {
-    private final Set<Element> selected = new HashSet<Element>();
+	private final Set<Element> selected = new HashSet<Element>();
 
-    private static final String TAG = SourceActivity.class.getSimpleName();
-    private TreeViewList source_;
+	private static final String TAG = SourceActivity.class.getSimpleName();
+	private TreeViewList source_;
 
-    private static int maxLevel = 4;
-    private TreeStateManager<Element> manager_ = null;
-    private SimpleStandardAdapter simpleAdapter_;
-    private boolean collapsible_;
+	private static int maxLevel = 4;
+	private TreeStateManager<Element> manager_ = null;
+	private SimpleStandardAdapter simpleAdapter_;
+	private boolean collapsible_;
 	final Handler handler_ = new Handler();
 	private ProgressDialog progressDialog_;
-    boolean newCollapsible_;
-    String html_ = null;
+	boolean newCollapsible_;
+	String html_ = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            Intent intent = getIntent();
-            if (intent == null) {
-            	Log.e("SourceActivity", "no intent.");
-            	return;
-            }
-            html_ = intent.getStringExtra("html");
+		if (savedInstanceState == null) {
+			Intent intent = getIntent();
+			if (intent == null) {
+				Log.e(TAG, "no intent.");
+				return;
+			}
+			html_ = intent.getStringExtra("html");
 
-        }
-        setContentView(R.layout.source);
-        
-        if (html_ == null) {
-        	Log.e("SourceActivity", "html string is null.");
-        	return;
-        }
-        source_ = (TreeViewList) SourceActivity.this.findViewById(R.id.html_source);
-        registerForContextMenu(source_);
+		}
+		setContentView(R.layout.source);
 
-        new Thread(new Runnable() {
+		if (html_ == null) {
+			Log.e(TAG, "html string is null.");
+			return;
+		}
+		source_ = (TreeViewList) SourceActivity.this
+				.findViewById(R.id.html_source);
+		registerForContextMenu(source_);
+
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-		        manager_ = new InMemoryTreeStateManager<Element>();
-		        final TreeBuilder<Element> treeBuilder = new TreeBuilder<Element>(manager_);
-		        DomCreator dom = new DomCreator(treeBuilder);
-		        maxLevel = dom.parse(new StringReader(html_));
+				manager_ = new InMemoryTreeStateManager<Element>();
+				final TreeBuilder<Element> treeBuilder = new TreeBuilder<Element>(
+						manager_);
+				DomCreator dom = new DomCreator(treeBuilder);
+				maxLevel = dom.parse(new StringReader(html_));
 				handler_.post(new Runnable() {
 					@Override
 					public void run() {
 
-			            Log.d(TAG, manager_.toString());
-			            newCollapsible_ = true;
-				        simpleAdapter_ = new SimpleStandardAdapter(SourceActivity.this, selected, manager_,
-				                maxLevel + 1);
-				        source_.setAdapter(simpleAdapter_);
-				        setCollapsible(newCollapsible_);
+						newCollapsible_ = true;
+						simpleAdapter_ = new SimpleStandardAdapter(
+								SourceActivity.this, selected, manager_,
+								maxLevel + 1);
+						source_.setAdapter(simpleAdapter_);
+						setCollapsible(newCollapsible_);
 						if (progressDialog_ != null) {
 							progressDialog_.dismiss();
 						}
@@ -89,16 +91,16 @@ public class SourceActivity extends Activity {
 		progressDialog_.setMessage("Processing... Please wait.");
 		progressDialog_.show();
 	}
-	
-    protected final void setCollapsible(final boolean newCollapsible) {
-        this.collapsible_ = newCollapsible;
-        source_.setCollapsible(this.collapsible_);
-    }
+
+	protected final void setCollapsible(final boolean newCollapsible) {
+		this.collapsible_ = newCollapsible;
+		source_.setCollapsible(this.collapsible_);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.source, menu);
 		return true;
@@ -122,29 +124,34 @@ public class SourceActivity extends Activity {
 				.setTitle("Search for...")
 				// setViewにてビューを設定します。
 				.setView(editView)
-				.setPositiveButton("Search", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						// 入力した文字をトースト出力する
-						search(editView.getText().toString());
-					}
-				})
+				.setPositiveButton("Search",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								// 入力した文字をトースト出力する
+								search(editView.getText().toString());
+							}
+						})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 							}
 						}).show();
 	}
+
 	private void search(String keyword) {
 		List<Element> acc = new ArrayList<Element>();
 		for (Element e : manager_.getVisibleList()) {
 			acc = searchRec(keyword, e, acc);
 		}
 		for (Element e : acc) {
-			Log.d("SourceActivity", "!!!!!!!!!!!!!" + e.getContent());
 			expandParents(e);
 		}
 	}
+
 	private void expandParents(Element element) {
 		Element parent = manager_.getParent(element);
 		if (parent != null) {
@@ -152,11 +159,12 @@ public class SourceActivity extends Activity {
 			expandParents(parent);
 		}
 	}
-	private List<Element> searchRec(String keyword, Element parent, List<Element> acc) {
+
+	private List<Element> searchRec(String keyword, Element parent,
+			List<Element> acc) {
 		TreeNodeInfo<Element> info = manager_.getNodeInfo(parent);
-		parent.setHitLine(false); //初期化
+		parent.setHitLine(false); // 初期化
 		if (parent.getContent().contains(keyword)) {
-			Log.d("SourceActivity", "hit!");
 			parent.setHitLine(true);
 			acc.add(parent);
 		}

@@ -24,6 +24,11 @@ public class DomCreator implements ContentHandler {
 	private long currentId_ = 0;
 	private final StringBuffer sb_ = new StringBuffer();
 
+	private static final String COLOR_TAG = "#efef8f";
+	private static final String COLOR_TAGNAME = "#e3ceab";
+	private static final String COLOR_STRING = "#cc9393";
+	private static final String COLOR_ATTR = "#dfdfbf";
+
 	public int parse(StringReader is) {
 		level_ = 0;
 		currentId_ = 0;
@@ -47,10 +52,17 @@ public class DomCreator implements ContentHandler {
 
 		StringBuffer attrs = new StringBuffer();
 		for (int i = 0; i < atts.getLength(); i++)
-			attrs.append(" " + atts.getQName(i) + "=\"" + atts.getValue(i)
-					+ "\"");
-		builder_.sequentiallyAddNextNode(new Element(currentId_++, "<" + qName
-				+ attrs.toString() + ">"), level_);
+			attrs.append(String
+					.format(" <font color=\"%s\"><b>%s</b></font><font color=\"%s\">=</font><font color=\"%s\">&quot;%s&quot;</font>",
+							COLOR_ATTR, atts.getQName(i), COLOR_TAG,
+							COLOR_STRING, atts.getValue(i)));
+		builder_.sequentiallyAddNextNode(
+				new Element(
+						currentId_++,
+						String.format(
+								"<font color=\"%s\">&lt;</font><font color=\"%s\">%s</font>%s<font color=\"%s\">&gt;</font>",
+								COLOR_TAG, COLOR_TAGNAME, qName,
+								attrs.toString(), COLOR_TAG)), level_);
 		level_++;
 		maxLevel_ = Math.max(maxLevel_, level_);
 	}
@@ -75,8 +87,13 @@ public class DomCreator implements ContentHandler {
 		registerTestNodes();
 
 		level_--;
-		builder_.sequentiallyAddNextNode(new Element(currentId_++, "</" + qName
-				+ ">"), level_);
+		builder_.sequentiallyAddNextNode(
+				new Element(
+						currentId_++,
+						String.format(
+								"<font color=\"%s\">&lt;/</font><font color=\"%s\">%s</font><font color=\"%s\">&gt;</font>",
+								COLOR_TAG, COLOR_TAGNAME, qName, COLOR_TAG)),
+				level_);
 	}
 
 	@Override

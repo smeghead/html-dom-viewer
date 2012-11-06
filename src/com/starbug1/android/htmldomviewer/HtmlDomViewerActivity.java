@@ -292,19 +292,14 @@ public class HtmlDomViewerActivity extends Activity {
 
 	public class JsObj {
 		public void vewSource(String html) {
-			Log.d(TAG, "html: " + html);
-
 			Intent intent = new Intent(HtmlDomViewerActivity.this,
 					SourceActivity.class);
 			intent.setType("text/plain");
 			intent.putExtra("html", html);
-			Log.d(TAG, html);
 			HtmlDomViewerActivity.this.startActivity(intent);
 		}
 
 		public void viewSourceByExternalEditor(String html) {
-			Log.d(TAG, "html: " + html);
-
 			Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 			intent.setType("text/plain");
 			intent.putExtra(Intent.EXTRA_TEXT, html);

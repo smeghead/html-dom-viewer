@@ -27,7 +27,6 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 		inflater_ = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		urls_ = urlsOriginal_ = urls;
-		Log.d(TAG, context_.toString());
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 		}
 		TextView text = (TextView) view;
 		text.setText(getItem(position).toString());
-		Log.d(TAG, "getView " + view.toString());
 		return text;
 	}
 
@@ -75,10 +73,8 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 			String inputed = constraint.toString().toLowerCase();
 			FilterResults filterResults = new FilterResults();
 			List<String> matches = new ArrayList<String>();
-			Log.d(TAG, "input: " + inputed);
 			for (String v : urlsOriginal_) {
 				if (v.toLowerCase().contains(inputed)) {
-					Log.d(TAG, "hit: " + v);
 					matches.add(v);
 				}
 			}
@@ -91,12 +87,9 @@ public class UrlListAdapter extends BaseAdapter implements Filterable {
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
-			Log.d(TAG, "publishResults");
 			if (results != null && results.count > 0) {
-				Log.d(TAG, "count: " + results.count);
 				// 再描画させる
 				notifyDataSetChanged();
-				Log.d(TAG, "notifyDataSetChanged call");
 			}
 		}
 	};
